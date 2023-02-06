@@ -143,8 +143,9 @@ function molecule {
 
      Copy-Item -Recurse -Force  $path/$role/defaults/* $path/molecule/$role/defaults
 
-     Copy-Item -Recurse -Force  $path/$role/verify.yml $path/molecule/$role/molecule/default/verify.yml
+     Copy-Item -Force  $path/$role/verify.yml $path/molecule/$role/molecule/default/verify.yml
     
+     Copy-Item  -Force  $path/$role/molecule.yml $path/molecule/$role/molecule/default/molecule.yml
 
      docker inspect molecule-$role | Out-Null; if($?){
      docker exec -ti molecule-$role  /bin/sh -c  "cd ./$role && molecule converge"
