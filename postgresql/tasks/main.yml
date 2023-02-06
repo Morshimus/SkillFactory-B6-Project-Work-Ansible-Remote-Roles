@@ -79,7 +79,7 @@
     state: directory
     owner: postgres
     group: postgres
-    mode: '0755'
+    mode: '0750'
   notify: stop_postgresql
 
 - name: Install sudo for testing  purpose MOLECULE
@@ -99,10 +99,22 @@
     - not pg_data_result.stat.exists
 
 
-- name: Configure postgresql.conf main page template
+- name: Configure postgresql.conf  template common
   template:
       src: postgresql.conf.j2
       dest: "/etc/postgresql/{{ pg_version }}/main/postgresql.conf"
       backup: yes
       mode: '0600'  
-  notify: restart_postgresql  
+  notify: restart_postgresql 
+  when: not pg_version == "15" 
+
+- name: Configure postgresql.conf template for 15 without stats_temp
+  template:
+      src: postgresql15.conf.j2
+      dest: "/etc/postgresql/{{ pg_version }}/main/postgresql.conf"
+      backup: yes
+      mode: '0600'  
+  notify: restart_postgresql 
+  when: pg_version == "15" 
+
+
