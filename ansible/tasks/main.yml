@@ -1,2 +1,26 @@
 ---
 # tasks file for ansible
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version == "20.04"
+    - ansible_distribution_file_variety == "Debian" 
+
+- name: Install System dependencies for Ubuntu
+  apt:
+    update_cache: no
+    pkg:
+      - ansible
+  run_once: true
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version == "20.04"
+    - ansible_distribution_file_variety == "Debian" 
+
+- name: Ansible  roles dir creation
+  file:
+    path: "{{ path-to-roles }}"
+    state: directory
+    mode: '0750'
