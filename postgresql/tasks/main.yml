@@ -106,7 +106,7 @@
       backup: yes
       mode: '0600'  
   notify: restart_postgresql 
-  when: not pg_version == "15" 
+  when: pg_version|string != "15" 
 
 - name: Configure postgresql.conf template for 15 without stats_temp
   template:
@@ -115,6 +115,7 @@
       backup: yes
       mode: '0600'  
   notify: restart_postgresql 
-  when: pg_version == "15" 
+  when: pg_version|string == "15" 
+
 
 
