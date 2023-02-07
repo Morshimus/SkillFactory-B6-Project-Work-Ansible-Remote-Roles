@@ -129,23 +129,24 @@ function molecule {
      if(Test-Path -Path $path/molecule/$role) {write-host -f magenta "This role already exist in molecule"}else{
      docker exec -ti molecule-$role  /bin/sh -c  "molecule init role $org.$role -d docker"
      }
-     Copy-Item -Recurse -Force  $path/$role/tasks/* $path/molecule/$role/tasks
 
-     Copy-Item -Recurse -Force  $path/$role/handlers/* $path/molecule/$role/handlers
+     try{Copy-Item -ErrorAction Stop -Recurse -Force  $path/$role/tasks/* $path/molecule/$role/tasks}catch{write-host -f magenta "There is no folder tasks!"}
 
-     Copy-Item -Recurse -Force  $path/$role/templates/* $path/molecule/$role/templates
+     try{Copy-Item -ErrorAction Stop -Recurse -Force  $path/$role/handlers/* $path/molecule/$role/handlers}catch{write-host -f magenta "There is no folder handlers!"}
 
-     Copy-Item -Recurse -Force  $path/$role/templates/* $path/molecule/$role/templates
+     try{Copy-Item -ErrorAction Stop -Recurse -Force  $path/$role/templates/* $path/molecule/$role/templates}catch{write-host -f magenta "There is no folder templates!"}
 
-     Copy-Item -Recurse -Force  $path/$role/tests/* $path/molecule/$role/tests
+     try{Copy-Item -ErrorAction Stop -Recurse -Force  $path/$role/files/* $path/molecule/$role/files}catch{write-host -f magenta "There is no folder files!"}
 
-     Copy-Item -Recurse -Force  $path/$role/vars/* $path/molecule/$role/vars
+     try{Copy-Item -ErrorAction Stop -Recurse -Force  $path/$role/tests/* $path/molecule/$role/tests}catch{write-host -f magenta "There is no folder tests!"}
 
-     Copy-Item -Recurse -Force  $path/$role/defaults/* $path/molecule/$role/defaults
+     try{Copy-Item -ErrorAction Stop -Recurse -Force  $path/$role/vars/* $path/molecule/$role/vars}catch{write-host -f magenta "There is no folder vars!"}
 
-     Copy-Item -Force  $path/$role/verify.yml $path/molecule/$role/molecule/default/verify.yml
+     try{Copy-Item  -ErrorAction Stop -Recurse -Force  $path/$role/defaults/* $path/molecule/$role/defaults}catch{write-host -f magenta "There is no folder defaults!"}
+
+     try{Copy-Item   -ErrorAction Stop -Force  $path/$role/verify.yml $path/molecule/$role/molecule/default/verify.yml  }catch{write-host -f magenta "There is no file verify.yml!"}
     
-     Copy-Item  -Force  $path/$role/molecule.yml $path/molecule/$role/molecule/default/molecule.yml
+     try{Copy-Item  -ErrorAction Stop -Force  $path/$role/molecule.yml $path/molecule/$role/molecule/default/molecule.yml}catch{write-host -f magenta "There is no file molecule.yml!"}
 
      docker inspect molecule-$role | Out-Null; if($?){
      docker exec -ti molecule-$role  /bin/sh -c  "cd ./$role && molecule converge"

@@ -1,2 +1,7 @@
 ---
 # defaults file for ansible
+path_to_key: "/root/morsh_ansible_SSH"
+path_to_inventory: "/root/inventory.ini"
+path_to_roles: "/etc/ansible/roles"
+path_to_requirements: "/root/requirements.yml"
+src_private_key: "morsh_ansible_SSH"

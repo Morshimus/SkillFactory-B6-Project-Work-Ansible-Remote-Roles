@@ -13,6 +13,7 @@
     update_cache: no
     pkg:
       - ansible
+      - git
   run_once: true
   when:
     - ansible_distribution == "Ubuntu"
@@ -21,6 +22,38 @@
 
 - name: Ansible  roles dir creation
   file:
-    path: "{{ path-to-roles }}"
+    path: "{{ path_to_roles }}"
     state: directory
     mode: '0750'
+
+- name: Ansible requirements for roles 
+  copy:
+    src: requirements.yml
+    dest: "{{ path_to_requirements }}"
+
+
+- name: Ansible requirements for roles 
+  command: "ansible-galaxy role install --role-file {{ path_to_requirements }}   --roles-path {{ path_to_roles }}" 
+
+
+- name: Ansible private-keys for hosts
+  copy:
+    src: "{{ src_private_key }}"
+    dest: "{{ path_to_key }}"
+    mode: '0600'
+
+- name: Autoclean apt cache
+  apt:
+    autoclean: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version == "20.04"
+    - ansible_distribution_file_variety == "Debian" 
+
+- name: Autoremove apt dependencies
+  apt:
+    autoremove: yes
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version == "20.04"
+    - ansible_distribution_file_variety == "Debian" 

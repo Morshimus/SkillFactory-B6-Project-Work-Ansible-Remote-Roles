@@ -56,7 +56,7 @@ root@ubuntu-20-04:/# cat /etc/ansible/ansible.cfg
 
 # some basic default values...
 
-inventory      = {( path-to-inventory }}
+inventory      = {{ path_to_inventory }}
 #library        = /usr/share/my_modules/
 #module_utils   = /usr/share/my_module_utils/
 #remote_tmp     = ~/.ansible/tmp
@@ -110,7 +110,7 @@ inventory      = {( path-to-inventory }}
 # inject_facts_as_vars = True
 
 # additional paths to search for roles in, colon separated
-roles_path    = {{ path-to-roles }}
+roles_path    = {{ path_to_roles }}
 
 # uncomment this to disable SSH key host checking
 host_key_checking = False
@@ -178,7 +178,7 @@ host_key_checking = False
 
 # if set, always use this private key file for authentication, same as
 # if passing --private-key to ansible or ansible-playbook
-private_key_file = {{ path-to-key }}
+private_key_file = {{ path_to_key }}
 
 # If set, configures the path to the Vault password file as an alternative to
 # specifying --vault-password-file on the command line.
