@@ -1,11 +1,11 @@
 - hosts: app
-  gather_facts: yes
-  become: yes   
-  roles:
-    - role: common/docker
+   gather_facts: yes
+   become: yes   
+   roles:
+     - role: common/docker
 
 - hosts: database
-  gather_gacts: yes
-  become: yes
-  roles:
-    - role: common/postgresql
+   gather_gacts: yes
+   become: yes
+   roles:
+     - role: common/postgresql
