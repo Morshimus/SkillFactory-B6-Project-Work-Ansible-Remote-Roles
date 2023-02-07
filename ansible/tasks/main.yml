@@ -33,10 +33,14 @@
 
 
 - name: Ansible requirements for roles 
+  become_user: ansible
+  become_user: true
   command: "ansible-galaxy role install --role-file {{ path_to_requirements }}   --roles-path {{ path_to_roles }}" 
 
 
 - name: Ansible private-keys for hosts
+  become_user: ansible
+  become_user: true
   copy:
     src: "{{ src_private_key }}"
     dest: "{{ path_to_key }}"
