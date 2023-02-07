@@ -11,7 +11,7 @@
    - role: tests/test_postgresql
   tasks:
 
-  - name: check docker installation result 
+  - name: check postgresql port result 
     assert:
         that:
            - "{{ output_port.failed }} == false"    
