@@ -80,7 +80,7 @@
     owner: postgres
     group: postgres
     mode: '0750'
-  notify: stop_postgresql
+
 
 - name: Install sudo for testing  purpose MOLECULE
   apt:
