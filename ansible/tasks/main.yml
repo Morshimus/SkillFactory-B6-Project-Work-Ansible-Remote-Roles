@@ -32,6 +32,11 @@
     dest: "{{ path_to_requirements }}"
 
 
+- name: Recursively remove directory of roles
+  ansible.builtin.file:
+    path: "{{ path_to_roles }}"
+    state: absent
+
 - name: Ansible requirements for roles 
   command: "ansible-galaxy role install --role-file {{ path_to_requirements }}   --roles-path {{ path_to_roles }}" 
 
@@ -41,18 +46,21 @@
     src: "{{ src_private_key }}"
     dest: "{{ path_to_key }}"
     mode: '0600'
+    force: true
 
 - name: Ansible inventory for hosts
   copy:
     src: inventory.ini
     dest: "{{ path_to_inventory }}"
     mode: '0600'
+    force: true
 
 - name: Ansible playbook for hosts
   copy:
     src: provisioning.yaml
     dest: "{{ path_to_playbook }}"
     mode: '0600'
+    force: true
 
 - name: Autoclean apt cache
   apt:
