@@ -42,6 +42,18 @@
     dest: "{{ path_to_key }}"
     mode: '0600'
 
+- name: Ansible inventory for hosts
+  copy:
+    src: inventory.ini
+    dest: "{{ path_to_inventory }}"
+    mode: '0600'
+
+- name: Ansible playbook for hosts
+  copy:
+    src: provisioning.yaml
+    dest: "{{ path_to_playbook }}"
+    mode: '0600'
+
 - name: Autoclean apt cache
   apt:
     autoclean: yes
